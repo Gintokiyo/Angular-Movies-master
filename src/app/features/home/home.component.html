@@ -1,0 +1,62 @@
+<section class="home-main-content">Welcome</section>
+
+<div class="container">
+  <!--TV-->
+  <section class="shows__container">
+    <h2 class="shows__title" title="Go to TV Shows">
+      <a routerLink="/followed-movies" class="colored-background-before">
+        <mat-icon>tv_gen</mat-icon>
+        Your Movies
+      </a>
+    </h2>
+
+    <mat-tab-group
+      [selectedIndex]="selectedTVTab"
+      mat-align-tabs="end"
+    >
+      <mat-tab *ngFor="let tab of tvShowsTabList" [label]="tab">
+        <swiper
+          [config]="config"
+          style="display: flex; flex-direction: column-reverse"
+        >
+          <ng-template
+            swiperSlide
+            *ngFor="let series of seriesList | slice : 0 : 15"
+          >
+            <app-poster-card [seriesModel]="series" [exists]="true"></app-poster-card>
+          </ng-template>
+        </swiper>
+      </mat-tab>
+    </mat-tab-group>
+  </section>
+
+  <!--Movies on theathers-->
+  <section class="movies__container">
+    <h2 class="movies__title" title="Go to Movies">
+      <a routerLink="/movies" class="colored-background-before">
+        <mat-icon>movie</mat-icon>
+        All Movies
+      </a>
+    </h2>
+
+    <mat-tab-group
+      (selectedTabChange)="tabChange($event)"
+      [selectedIndex]="selectedMovieTab"
+      mat-align-tabs="end"
+    >
+      <mat-tab *ngFor="let tab of movieTabList" [label]="tab">
+        <swiper
+          [config]="config"
+          style="display: flex; flex-direction: column-reverse"
+        >
+          <ng-template
+            swiperSlide
+            *ngFor="let movie of moviesList | slice : 0 : 15"
+          >
+            <app-poster-card [model]="movie" [isMovie]="true" [exists]="false"></app-poster-card>
+          </ng-template>
+        </swiper>
+      </mat-tab>
+    </mat-tab-group>
+  </section>
+</div>

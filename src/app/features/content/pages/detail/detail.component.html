@@ -1,0 +1,108 @@
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<main class="content">
+  <div *ngIf="isSeries">
+    <section
+      class="content__main"
+      [style]="
+        'background-image: url(' +
+        'https://image.tmdb.org/t/p/w1280/' +
+        series?.seriesBackgroundUrl +
+        ');'
+      "
+    >
+      <div class="content__container">
+        <div class="content__info container">
+          <img
+            src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{
+              series?.seriesPosterUrl
+            }}"
+            data-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{
+              series?.seriesPosterUrl
+            }}"
+            data-srcset="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{
+              series?.seriesPosterUrl
+            }} 1x, https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{
+              series?.seriesPosterUrl
+            }} 2x"
+            srcset="
+              https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{series?.seriesPosterUrl}} 1x,
+              https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{series?.seriesPosterUrl}} 2x
+            "
+            data-loaded="true"
+            [alt]="series?.seriesName"
+            appImgMissingDirective
+          />
+
+          <div class="content__data">
+            <h2>
+              {{ series?.seriesName }} ({{
+                series?.seriesReleaseDate
+                  | date : "YYYY"
+              }})
+            </h2>
+
+            <h4>Overview</h4>
+            <p>{{ series?.seriesDescription }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div *ngIf="!isSeries">
+    <section
+      class="content__main"
+      [style]="
+        'background-image: url(' +
+        'https://image.tmdb.org/t/p/w1280' +
+        content?.backdrop_path +
+        ');'
+      "
+    >
+      <div class="content__container">
+        <div class="content__info container">
+          <img
+            src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{
+              content?.poster_path
+            }}"
+            data-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{
+              content?.poster_path
+            }}"
+            data-srcset="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{
+              content?.poster_path
+            }} 1x, https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{
+              content?.poster_path
+            }} 2x"
+            srcset="
+              https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{content?.poster_path}} 1x,
+              https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{content?.poster_path}} 2x
+            "
+            data-loaded="true"
+            [alt]="content?.title"
+            appImgMissingDirective
+          />
+
+          <div class="content__data">
+            <h2>
+              {{ content?.title ?? content?.name }} ({{
+                content?.release_date ?? content?.first_air_date
+                  | date : "YYYY"
+              }})
+            </h2>
+            <h3>{{ content?.tagline }}</h3>
+
+            <h4>Overview</h4>
+            <p>{{ content?.overview }}</p>
+
+            <button mat-raised-button color="primary" aria-label="AddMovie" (click)="postNewSeries()">
+              <mat-icon>add</mat-icon> Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- This should be changed with other info instead -->
+  <section class="content__recommendations container"></section>
+</main>
