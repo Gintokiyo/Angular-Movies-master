@@ -11,7 +11,7 @@ export class MovieCardComponent {
   @Input() model: any;
   @Input() isMovie: boolean;
   @Input() seriesModel: SeriesModel;
-  @Input() exists: boolean;
+  @Input() isSeries: boolean;
 
   constructor () {}
 }

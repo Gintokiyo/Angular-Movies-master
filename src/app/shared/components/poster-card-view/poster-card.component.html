@@ -1,32 +1,32 @@
-<div *ngIf="exists">
+<div *ngIf="isSeries">
   
   <div class="poster">
-    <a [routerLink]="'/followed-movies/' + seriesModel.seriesId"
-       [title]="'Go to ' + seriesModel.seriesName ?? seriesModel.seriesOriginalName">
-      <img class="poster__image" loading="lazy" [src]="'https://image.tmdb.org/t/p/w220_and_h330_face/' + model.seriesPosterUrl"
-           srcset="https://image.tmdb.org/t/p/w220_and_h330_face/{{model.seriesPosterUrl}} 1x,
-           https://image.tmdb.org/t/p/w440_and_h660_face/{{model.seriesPosterUrl}} 2x"
-           [alt]="seriesModel.seriesName ?? seriesModel.seriesOriginalName" appImgMissingDirective>
+    <a [routerLink]="'/followed-movies/' + model.id"
+       [title]="'Go to ' + model.title ?? model.original_title">
+      <img class="poster__image" loading="lazy" [src]="'https://image.tmdb.org/t/p/w220_and_h330_face/' + model.poster_path"
+           srcset="https://image.tmdb.org/t/p/w220_and_h330_face/{{model.poster_path}} 1x,
+           https://image.tmdb.org/t/p/w440_and_h660_face/{{model.poster_path}} 2x"
+           [alt]="model.title ?? model.original_title" appImgMissingDirective>
     </a>
   
     <div class="poster__content">
-      <a *ngIf="seriesModel.seriesName ?? seriesModel.seriesOriginalName"
-         [routerLink]="'/followed-movies/' + seriesModel.seriesId"
-         [title]="seriesModel.seriesName ?? seriesModel.seriesOriginalName"
+      <a *ngIf="model.title ?? model.original_title"
+         [routerLink]="'/followed-movies/' + model.id"
+         [title]="model.title ?? model.original_title"
          class="poster__title colored-hover">
-        {{seriesModel.seriesName ?? seriesModel.seriesOriginalName}}
+        {{model.title ?? model.original_title}}
       </a>
       <p>
-        {{seriesModel.seriesReleaseDate | date}}
+        {{model.release_date}}
       </p>
     </div>
   
   </div>
 </div>
 
-<div *ngIf="!exists">
+<div *ngIf="isMovie">
   <div class="poster">
-    <a [routerLink]="isMovie ? '/movies/' + model.id : '/tv-shows/' + model.id"
+    <a [routerLink]="!isSeries ? '/movies/' + model.id : '/tv-show/' + model.id"
        [title]="'Go to ' + model.title ?? model.name">
       <img class="poster__image" loading="lazy" [src]="'https://image.tmdb.org/t/p/w220_and_h330_face/' + model['poster_path']"
            srcset="https://image.tmdb.org/t/p/w220_and_h330_face/{{model['poster_path']}} 1x,

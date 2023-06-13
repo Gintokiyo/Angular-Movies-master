@@ -23,7 +23,7 @@
             swiperSlide
             *ngFor="let series of seriesList | slice : 0 : 15"
           >
-            <app-poster-card [seriesModel]="series" [exists]="true"></app-poster-card>
+            <app-poster-card [model]="series" [isSeries]="true"></app-poster-card>
           </ng-template>
         </swiper>
       </mat-tab>
@@ -53,7 +53,7 @@
             swiperSlide
             *ngFor="let movie of moviesList | slice : 0 : 15"
           >
-            <app-poster-card [model]="movie" [isMovie]="true" [exists]="false"></app-poster-card>
+            <app-poster-card [model]="movie" [isMovie]="true"></app-poster-card>
           </ng-template>
         </swiper>
       </mat-tab>

@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
   tvShowsList: Array<TvModel> = [];
   selectedTVTab = 0;
 
-  seriesList: Array<SeriesModel> = [];
+  seriesList: Array<MovieModel> = [];
 
   constructor(
     private moviesService: MoviesService,
@@ -94,6 +94,7 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .subscribe((res) => {
         this.moviesList = res.results;
+        console.log(res);
       });
   }
 
@@ -105,7 +106,37 @@ export class HomeComponent implements OnInit {
 
   getSeries(): void {
     this.databaseService.getAllSeries().pipe().subscribe((res) => {
-      this.seriesList = res.results;
+      let movieList = new Array<MovieModel>();
+      res.forEach(element => {
+        let movie: MovieModel = {
+          id: element.seriesId,
+          title: element.seriesName,
+          original_title: element.seriesOriginalName,
+          original_language: element.seriesOriginalLanguage,
+          backdrop_path: element.seriesBackgroundUrl,
+          poster_path: element.seriesPosterUrl,
+          release_date: '',
+          overview: element.seriesDescription,
+          homepage: element.seriesHomepage,
+          adult: false,
+          genres: undefined,
+          imdb_id: undefined,
+          popularity: undefined,
+          vote_average: element.seriesRating,
+          production_companies: undefined,
+          production_countries: undefined,
+          revenue: undefined,
+          runtime: undefined,
+          spoken_languages: undefined,
+          status: 'Finished',
+          tagline: ' ',
+          video: false,
+          vote_count: 0
+        }
+        movieList.push(movie);
+        
+      });
+      this.seriesList = movieList;
       console.log(res);
     })
   }

@@ -5,6 +5,9 @@ import {take} from 'rxjs/operators';
 import {Router} from "@angular/router";
 import {OnTVService} from "./services/onTV.service";
 import { DatabaseService } from './services/database.service';
+import { MovieModel } from './models/movie.model';
+import { Pagination } from 'swiper';
+import { SeriesModel } from './models/series.model';
 
 @Component({
   selector: 'app-movies',
@@ -15,7 +18,8 @@ export class ContentComponent implements OnInit {
 
   contentType = '';
   nowPlaying: Array<PaginationModel> = [];
-
+  paginationObject: PaginationModel;
+  paginationObjectList: Array<PaginationModel> = [];
   totalResults: any;
 
   constructor(
@@ -42,6 +46,8 @@ export class ContentComponent implements OnInit {
       res => {
         this.totalResults = res.total_results;
         this.nowPlaying = res.results;
+        console.log(this.nowPlaying);
+        console.log(res);
       }, () => {}
     );
   }
@@ -57,8 +63,48 @@ export class ContentComponent implements OnInit {
 
   getSeries(): void {
     this.databaseService.getAllSeries().pipe().subscribe((res) => {
-      this.totalResults = res.results;
+      let movieList = new Array<MovieModel>();
+      res.forEach(element => {
+        let movie: MovieModel = {
+          id: element.seriesId,
+          title: element.seriesName,
+          original_title: element.seriesOriginalName,
+          original_language: element.seriesOriginalLanguage,
+          backdrop_path: element.seriesBackgroundUrl,
+          poster_path: element.seriesPosterUrl,
+          release_date: '',
+          overview: element.seriesDescription,
+          homepage: element.seriesHomepage,
+          adult: false,
+          genres: undefined,
+          imdb_id: undefined,
+          popularity: undefined,
+          vote_average: element.seriesRating,
+          production_companies: undefined,
+          production_countries: undefined,
+          revenue: undefined,
+          runtime: undefined,
+          spoken_languages: undefined,
+          status: 'Finished',
+          tagline: ' ',
+          video: false,
+          vote_count: 0
+        }
+        movieList.push(movie);
+        
+      });
+      this.paginationObject = new PaginationModel();
+      this.paginationObject.dates = undefined;
+      this.paginationObject.page = 1;
+      this.paginationObject.total_pages = 1;
+      this.paginationObject.total_results = 4;
+      this.paginationObject.results = movieList;
+      this.paginationObjectList.push(this.paginationObject);
+      this.nowPlaying = this.paginationObjectList;
+      this.totalResults = 1;
       console.log(res);
+      console.log(this.paginationObjectList[0]);
+      console.log(this.nowPlaying);
     })
   }
 

@@ -6,7 +6,7 @@
       [style]="
         'background-image: url(' +
         'https://image.tmdb.org/t/p/w1280/' +
-        series?.seriesBackgroundUrl +
+        content?.backdrop_path +
         ');'
       "
     >
@@ -14,35 +14,34 @@
         <div class="content__info container">
           <img
             src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{
-              series?.seriesPosterUrl
+              content?.poster_path
             }}"
             data-src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{
-              series?.seriesPosterUrl
+              content?.poster_path
             }}"
             data-srcset="https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{
-              series?.seriesPosterUrl
+              content?.poster_path
             }} 1x, https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{
-              series?.seriesPosterUrl
+              content?.poster_path
             }} 2x"
             srcset="
-              https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{series?.seriesPosterUrl}} 1x,
-              https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{series?.seriesPosterUrl}} 2x
+              https://image.tmdb.org/t/p/w300_and_h450_bestv2/{{content?.poster_path}} 1x,
+              https://image.tmdb.org/t/p/w600_and_h900_bestv2/{{content?.poster_path}} 2x
             "
             data-loaded="true"
-            [alt]="series?.seriesName"
+            [alt]="content?.title"
             appImgMissingDirective
           />
 
           <div class="content__data">
             <h2>
-              {{ series?.seriesName }} ({{
-                series?.seriesReleaseDate
-                  | date : "YYYY"
+              {{ content?.title }} ({{
+                content?.release_date
               }})
             </h2>
 
             <h4>Overview</h4>
-            <p>{{ series?.seriesDescription }}</p>
+            <p>{{ content?.overview }}</p>
           </div>
         </div>
       </div>
