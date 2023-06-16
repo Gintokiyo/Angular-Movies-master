@@ -42,6 +42,12 @@
 
             <h4>Overview</h4>
             <p>{{ content?.overview }}</p>
+            <a href="{{this.contentPage}}" aria-label="Movies">
+              <button mat-raised-button color="primary" aria-label="DeleteMovie" (click)="deleteSeries()">
+                <mat-icon>delete</mat-icon> Delete
+              </button>
+            </a>
+            
           </div>
         </div>
       </div>
@@ -93,9 +99,12 @@
             <h4>Overview</h4>
             <p>{{ content?.overview }}</p>
 
-            <button mat-raised-button color="primary" aria-label="AddMovie" (click)="postNewSeries()">
-              <mat-icon>add</mat-icon> Add
-            </button>
+            <a href="{{this.contentPage}}" aria-label="Movies">
+              <button mat-raised-button color="primary" aria-label="AddMovie" (click)="postNewSeries()">
+                <mat-icon>add</mat-icon> Add
+              </button>
+            </a>
+            
           </div>
         </div>
       </div>

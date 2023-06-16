@@ -3,9 +3,14 @@
   <div class="contents__container">
 
     <div class="contents__right-side">
-
-      <div class="contents__list">
-        <app-poster-card *ngFor="let content of nowPlaying" [model]="content" [isMovie]="contentType === 'movies'" [isSeries]="contentType === 'followed-movies'"></app-poster-card>
+      <div *ngIf="isSearch" class="input-element">
+        <input placeholder="Search your movie" #val (input)="getMovies(val.value)" class="input-box">
+      </div>
+      <div class="contents__list" *ngIf="!isSeries">
+        <app-poster-card *ngFor="let content of nowPlaying" [model]="content" [isMovie]="contentType === 'movies'"></app-poster-card>
+      </div>
+      <div class="contents__list" *ngIf="isSeries">
+        <app-poster-card *ngFor="let content of nowPlaying[0].results" [model]="content" [isSeries]="contentType === 'followed-movies'"></app-poster-card>
       </div>
 
       <mat-paginator [length]="totalResults"

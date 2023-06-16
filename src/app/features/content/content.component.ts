@@ -21,6 +21,10 @@ export class ContentComponent implements OnInit {
   paginationObject: PaginationModel;
   paginationObjectList: Array<PaginationModel> = [];
   totalResults: any;
+  isSeries: boolean;
+  isSearch: boolean;
+  searchExists: boolean;
+  searchKeyword: string;
 
   constructor(
     private moviesService: MoviesService,
@@ -35,10 +39,35 @@ export class ContentComponent implements OnInit {
 
     if (this.contentType === 'movies') {
       this.getNowPlayinMovies(1);
+      this.isSeries = false;
+      this.isSearch = true;
     } else {
-      this.getSeries();
+      this.getSeries(1);
+      this.isSeries = true;
+      this.isSearch = false;
     }
 
+  }
+
+  getMovies(name: string, page: number | undefined): void {
+    console.log(name)
+    this.searchKeyword = name;
+    this.searchExists = name === '' ? false : true;
+    page = page === undefined ? 1 : page;
+
+    if(this.searchExists) {
+      this.moviesService.searchMovies(name, page).pipe(take(1)).subscribe(
+        res => {
+          this.totalResults = res.total_results;
+          this.nowPlaying = res.results;
+        }, () => {}
+      );
+    }
+    else {
+      this.getNowPlayinMovies(1);
+    }
+    
+    console.log(this.searchExists);
   }
 
   getNowPlayinMovies(page: number) {
@@ -61,8 +90,11 @@ export class ContentComponent implements OnInit {
     );
   }
 
-  getSeries(): void {
+  getSeries(page: number): void {
     this.databaseService.getAllSeries().pipe().subscribe((res) => {
+      this.totalResults = res.length;
+    })
+    this.databaseService.getPageSeries(page).pipe().subscribe((res) => {
       let movieList = new Array<MovieModel>();
       res.forEach(element => {
         let movie: MovieModel = {
@@ -96,23 +128,28 @@ export class ContentComponent implements OnInit {
       this.paginationObject = new PaginationModel();
       this.paginationObject.dates = undefined;
       this.paginationObject.page = 1;
-      this.paginationObject.total_pages = 1;
-      this.paginationObject.total_results = 4;
+      this.paginationObject.total_results = movieList.length;
+      this.paginationObject.total_pages = Math.ceil(this.paginationObject.total_results / 20);
       this.paginationObject.results = movieList;
       this.paginationObjectList.push(this.paginationObject);
       this.nowPlaying = this.paginationObjectList;
-      this.totalResults = 1;
+      this.paginationObjectList = new Array<PaginationModel>();
       console.log(res);
       console.log(this.paginationObjectList[0]);
       console.log(this.nowPlaying);
-    })
+    });
   }
 
   changePage(event) {
     if (this.contentType === 'movies') {
-      this.getNowPlayinMovies(event.pageIndex + 1);
+      if(this.searchExists) {
+        this.getMovies(this.searchKeyword, event.pageIndex + 1);
+      }
+      else {
+        this.getNowPlayinMovies(event.pageIndex + 1);
+      }
     } else {
-      this.getNowPlayinTVShows(event.pageIndex + 1);
+      this.getSeries(event.pageIndex + 1);
     }
   }
 

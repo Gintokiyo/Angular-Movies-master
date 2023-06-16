@@ -31,4 +31,12 @@ export class DatabaseService {
     console.log(body);
     return this.http.post(`${this.baseUrl}/PostSingleSeries`,  body, { headers: headers, withCredentials: true });
   }
+
+  getPageSeries(page: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/GetPageSeries?page=${page}`, { headers: headers, withCredentials: true });
+  }
+
+  deleteSeries(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/DeleteSingleSeries?id=${id}`, { headers: headers, withCredentials: true });
+  }
 }

@@ -61,3 +61,30 @@
   }
 
 }
+
+.input-box {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 450px;
+  height: 30px;
+}
+
+.input-box:focus {
+  outline: none;
+  border-color: #d10c3e;
+  box-shadow: 0 0 5px #c90b44;
+}
+
+.input-box::placeholder {
+  color: #999;
+}
+
+.input-box:hover {
+  border-color: #999;
+}
+
+.input-element {
+  padding-bottom: 10px;
+}

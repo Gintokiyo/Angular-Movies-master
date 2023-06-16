@@ -45,6 +45,8 @@ export class DetailComponent implements OnInit {
   isLoading = true;
   isSeries: boolean;
   newSeries: SeriesModel;
+  seriesId: number;
+  contentPage: string;
 
   @ViewChild("matTrailerDialog") matTrailerDialog: TemplateRef<any>;
 
@@ -59,20 +61,22 @@ export class DetailComponent implements OnInit {
     public trailerDialog: MatDialog
   ) {
     this.contentType = this.router.url.split("/")[1];
+    this.contentPage = location.href.substring(0, location.href.lastIndexOf('movies/') + 6);
+    console.log(this.contentPage);
   }
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      const id = params["url"];
+      this.seriesId = params["url"];
 
       if (this.contentType === "movies") {
-        this.getMovie(id);
-        this.getMovieVideo(id);
-        this.getRecomendedMovie(id);
+        this.getMovie(this.seriesId);
+        this.getMovieVideo(this.seriesId);
+        this.getRecomendedMovie(this.seriesId);
         this.isSeries = false;
       } else {
         if (this.contentType === "followed-movies") {
-          this.getSingleSeries(id);
+          this.getSingleSeries(this.seriesId);
           this.isSeries = true;
         }
         else {
@@ -237,6 +241,12 @@ export class DetailComponent implements OnInit {
       console.log(res);
     });
     console.log("Success");
+  }
+
+  deleteSeries() {
+    this.databaseService.deleteSeries(this.seriesId).subscribe((res) => {
+      console.log(res);
+    })
   }
 
   // Seo tags
