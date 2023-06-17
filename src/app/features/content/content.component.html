@@ -4,7 +4,10 @@
 
     <div class="contents__right-side">
       <div *ngIf="isSearch" class="input-element">
-        <input placeholder="Search your movie" #val (input)="getMovies(val.value)" class="input-box">
+        <input placeholder="Search your movie" #val (input)="getMoviesExternal(val.value)" class="input-box" *ngIf="!isSeries">
+      </div>
+      <div class="input-element">
+        <input placeholder="Search your movie" #val (input)="getMoviesDatabase(val.value)" class="input-box" *ngIf="isSeries">
       </div>
       <div class="contents__list" *ngIf="!isSeries">
         <app-poster-card *ngFor="let content of nowPlaying" [model]="content" [isMovie]="contentType === 'movies'"></app-poster-card>

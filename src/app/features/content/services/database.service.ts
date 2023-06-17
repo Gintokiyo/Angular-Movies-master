@@ -26,6 +26,10 @@ export class DatabaseService {
     return this.http.get(`${this.baseUrl}/GetSingleSeries?id=${id}`, { headers: headers, withCredentials: true });
   }
 
+  getByExIdSeries(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/GetByExIdSeries?id=${id}`, { headers: headers, withCredentials: true });
+  }
+
   postSingleSeries(series: SeriesModel): Observable<any> {
     const body = JSON.stringify(series);
     console.log(body);
@@ -34,6 +38,10 @@ export class DatabaseService {
 
   getPageSeries(page: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/GetPageSeries?page=${page}`, { headers: headers, withCredentials: true });
+  }
+
+  getSearchSeries(search: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/GetSearchSeries?search=${search}`, { headers: headers, withCredentials: true });
   }
 
   deleteSeries(id: number): Observable<any> {

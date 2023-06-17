@@ -131,6 +131,8 @@ export class DetailComponent implements OnInit {
         },
         () => {}
       );
+      console.log(this.recomendedContentList);
+      console.log(id);
   }
 
   // TV
@@ -192,13 +194,13 @@ export class DetailComponent implements OnInit {
           original_language: res.seriesOriginalLanguage,
           backdrop_path: res.seriesBackgroundUrl,
           poster_path: res.seriesPosterUrl,
-          release_date: " ",
+          release_date: new Date(res.seriesReleaseDate).toDateString(),
           overview: res.seriesDescription,
           homepage: res.seriesHomepage,
           adult: false,
           genres: undefined,
           imdb_id: undefined,
-          popularity: undefined,
+          popularity: res.seriesExternalId, //Store external ID in popularity for now.
           vote_average: res.seriesRating,
           production_companies: undefined,
           production_countries: undefined,
@@ -211,6 +213,7 @@ export class DetailComponent implements OnInit {
           vote_count: 0,
         };
         this.content = movie;
+        this.getRecomendedMovie(movie.popularity.toString());
         console.log(this.content);
         this.isLoading = false;
       });
@@ -235,6 +238,7 @@ export class DetailComponent implements OnInit {
     this.newSeries.seriesBackgroundUrl = this.content.backdrop_path;
     this.newSeries.seriesOriginalLanguage = this.content.original_language;
     this.newSeries.seriesHomepage = this.content.homepage;
+    this.newSeries.seriesExternalId = this.content.id;
     console.log(this.newSeries);
 
     this.databaseService.postSingleSeries(this.newSeries).subscribe((res) => {

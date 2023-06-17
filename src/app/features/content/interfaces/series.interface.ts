@@ -13,4 +13,5 @@ export interface ISeries {
     seriesBackgroundUrl: string; //backdrop_path
     seriesOriginalLanguage: string; //original_language
     seriesHomepage: string; //homepage
+    seriesExternalId: number; //External API Id
   }

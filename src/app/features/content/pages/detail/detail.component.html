@@ -110,7 +110,22 @@
       </div>
     </section>
   </div>
+  <section class="content__recommendations container">
 
-  <!-- This should be changed with other info instead -->
-  <section class="content__recommendations container"></section>
+    <h2>Recommended Movies</h2>
+
+    <div class="content__recommendations--cards" *ngIf="recomendedContentList.length > 0; else noRecomendedMovies">
+      <div *ngFor="let content of recomendedContentList;">
+        <app-poster-card [model]="content" [isMovie]="contentType === 'movies' || contentType === 'followed-movies'"></app-poster-card>
+      </div>
+    </div>
+
+    <ng-template #noRecomendedMovies>
+      <div class="content__no-recomended">
+        <mat-icon [inline]="true">sentiment_dissatisfied</mat-icon>
+        <span>No recommended movies</span>
+      </div>
+    </ng-template>
+
+  </section>
 </main>

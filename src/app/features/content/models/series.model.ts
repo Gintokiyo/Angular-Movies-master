@@ -1,20 +1,4 @@
 export class SeriesModel {
-  /*
-    public id: number; 
-    public name: string;
-    public original_name: string;
-    public overview: string; 
-    public vote_average: number; 
-    public number_of_seasons: number; 
-    public number_of_episodes: number;
-    public latest_episode: string;
-    public poster_path: string; 
-    public first_air_date: Date; 
-    public update_cycle: number;
-    public backdrop_path: string;
-    public original_language: string;
-    public homepage: string;
-    */
     public seriesId: number; //Database ID
     public seriesName: string;
     public seriesOriginalName: string;
@@ -29,5 +13,6 @@ export class SeriesModel {
     public seriesBackgroundUrl: string; //backdrop_path
     public seriesOriginalLanguage: string; //original_language
     public seriesHomepage: string; //homepage
+    public seriesExternalId: number; //External API Id
   }
   
